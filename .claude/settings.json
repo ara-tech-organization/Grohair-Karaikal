@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/arago/Downloads/**)",
+      "Bash(ls \"c:\\\\Users\\\\arago\\\\OneDrive\\\\Documents\\\\Grohair karaikal-main\"/src/assets/*.png \"c:\\\\Users\\\\arago\\\\OneDrive\\\\Documents\\\\Grohair karaikal-main\"/src/assets/*.jpg \"c:\\\\Users\\\\arago\\\\OneDrive\\\\Documents\\\\Grohair karaikal-main\"/src/assets/*.jpeg)",
+      "Read(//c/Users/arago/**)",
+      "Bash(ls \"c:\\\\Users\\\\arago\\\\OneDrive\\\\Documents\\\\Grohair karaikal-main\\\\src\\\\assets\"/logo*)"
+    ]
+  }
+}
