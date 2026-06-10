@@ -65,152 +65,177 @@ export default function Contact() {
       />
 
       <section className="section">
-        <div className="container-px mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-12">
-            {/* FORM */}
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5 }}
-              className="card lg:col-span-7"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-2xl font-semibold tracking-tight text-ink-900">
-                    Send us a message
-                  </h2>
-                  <p className="mt-1 text-sm text-ink-500">
-                    We typically reply within a few hours during clinic hours.
-                  </p>
-                </div>
-                <span className="hidden h-10 w-10 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow sm:inline-flex">
-                  <Send className="h-4 w-4" />
-                </span>
+        <div className="container-px mx-auto max-w-7xl space-y-8">
+
+          {/* FORM — full width */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
+            className="card"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-semibold tracking-tight text-ink-900">
+                  Send us a message
+                </h2>
+                <p className="mt-1 text-sm text-ink-500">
+                  We typically reply within a few hours during clinic hours.
+                </p>
               </div>
+              <span className="hidden h-10 w-10 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow sm:inline-flex">
+                <Send className="h-4 w-4" />
+              </span>
+            </div>
 
-              <form
-                noValidate
-                onSubmit={onSubmit}
-                className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2"
-              >
-                <Field
-                  label="Full name"
-                  id="contact-name"
-                  type="text"
-                  autoComplete="name"
-                  placeholder="Jane Doe"
-                  value={form.name}
-                  onChange={update("name")}
-                  error={errors.name}
+            <form
+              noValidate
+              onSubmit={onSubmit}
+              className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3"
+            >
+              <Field
+                label="Full name"
+                id="contact-name"
+                type="text"
+                autoComplete="name"
+                placeholder="Jane Doe"
+                value={form.name}
+                onChange={update("name")}
+                error={errors.name}
+              />
+              <Field
+                label="Email"
+                id="contact-email"
+                type="email"
+                autoComplete="email"
+                placeholder="jane@example.com"
+                value={form.email}
+                onChange={update("email")}
+                error={errors.email}
+              />
+              <Field
+                label="Phone"
+                id="contact-phone"
+                type="tel"
+                autoComplete="tel"
+                placeholder="+91 9XXXXXXXXX"
+                value={form.phone}
+                onChange={update("phone")}
+                error={errors.phone}
+              />
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="contact-message"
+                  className="label-base mb-2 block"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="contact-message"
+                  rows={5}
+                  placeholder="Tell us about your goals or the treatment you're curious about…"
+                  value={form.message}
+                  onChange={update("message")}
+                  className="input-base resize-none"
                 />
-                <Field
-                  label="Email"
-                  id="contact-email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="jane@example.com"
-                  value={form.email}
-                  onChange={update("email")}
-                  error={errors.email}
-                />
-                <Field
-                  label="Phone"
-                  id="contact-phone"
-                  type="tel"
-                  autoComplete="tel"
-                  placeholder="+91 9XXXXXXXXX"
-                  value={form.phone}
-                  onChange={update("phone")}
-                  error={errors.phone}
-                />
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="contact-message"
-                    className="label-base mb-2 block"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    rows={6}
-                    placeholder="Tell us about your goals or the treatment you're curious about…"
-                    value={form.message}
-                    onChange={update("message")}
-                    className="input-base resize-none"
-                  />
-                  {errors.message && <FieldError text={errors.message} />}
-                </div>
-                <div className="sm:col-span-2 flex items-center justify-between gap-4 pt-2">
-                  <p className="text-xs text-ink-400">
-                    By sending this form, you agree to our privacy practices.
-                  </p>
-                  <Button type="submit" variant="primary">
-                    Send Message
-                    <Send className="h-4 w-4" />
-                  </Button>
-                </div>
-              </form>
-            </motion.div>
+                {errors.message && <FieldError text={errors.message} />}
+              </div>
+              <div className="sm:col-span-3 flex items-center justify-between gap-4 pt-2">
+                <p className="text-xs text-ink-400">
+                  By sending this form, you agree to our privacy practices.
+                </p>
+                <Button type="submit" variant="primary">
+                  Send Message
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+            </form>
+          </motion.div>
 
-            {/* INFO */}
-            <div className="space-y-6 lg:col-span-5">
+          {/* INFO + MAP row */}
+          <div className="grid gap-8 lg:grid-cols-2">
+
             {/* CLINIC INFO */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: 0.05 }}
-              className="card"
+              className="relative overflow-hidden rounded-3xl bg-white shadow-card ring-1 ring-ink-100"
             >
-              <h3 className="text-base font-semibold text-ink-900">
-                Clinic Information
-              </h3>
-              <ul className="mt-5 space-y-5 text-sm text-ink-600">
-                <InfoLine icon={MapPin} label="Address" value={clinic.address} />
-                <InfoLine
-                  icon={Phone}
-                  label="Phone"
-                  value={
-                    <a
-                      href={`tel:${clinic.phone.replace(/\s/g, "")}`}
-                      className="hover:text-brand-600"
-                    >
-                      {clinic.phone}
-                    </a>
-                  }
-                />
-                <InfoLine
-                  icon={Mail}
-                  label="Email"
-                  value={
-                    <a
-                      href={`mailto:${clinic.email}`}
-                      className="hover:text-brand-600"
-                    >
-                      {clinic.email}
-                    </a>
-                  }
-                />
-                <InfoLine
-                  icon={Clock}
-                  label="Working hours"
-                  value={
-                    <div className="space-y-0.5">
-                      {clinic.hours.map((h) => (
-                        <div key={h.day} className="flex justify-between gap-6">
-                          <span>{h.day}</span>
-                          <span className="text-ink-500">{h.time}</span>
-                        </div>
-                      ))}
-                    </div>
-                  }
-                />
-              </ul>
+              {/* decorative blobs */}
+              <div aria-hidden="true" className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-brand-100/50 blur-3xl" />
+              <div aria-hidden="true" className="pointer-events-none absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-brand-50/80 blur-2xl" />
 
-              <div className="mt-7 border-t border-ink-100 pt-5">
-                <div className="label-base">Follow us</div>
-                <div className="mt-3 flex items-center gap-2">
+              <div className="relative px-6 py-7 sm:px-8">
+                {/* header */}
+                <span className="eyebrow">Visit Us</span>
+                <h3 className="mt-3 text-xl font-semibold tracking-tight text-ink-900">
+                  {clinic.shortName}
+                </h3>
+                <p className="text-sm text-ink-500">{clinic.city}</p>
+
+                {/* 2-col contact tiles */}
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                  <a
+                    href={`tel:${clinic.phone.replace(/\s/g, "")}`}
+                    className="group flex flex-col gap-2 rounded-2xl bg-ink-50 p-4 ring-1 ring-ink-100 transition-all hover:bg-brand-50 hover:ring-brand-100"
+                  >
+                    <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-brand-600 shadow-soft ring-1 ring-ink-100 transition-colors group-hover:bg-brand-gradient group-hover:text-white group-hover:ring-transparent">
+                      <Phone className="h-3.5 w-3.5" />
+                    </span>
+                    <div>
+                      <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-ink-400">Phone</p>
+                      <p className="mt-0.5 text-xs font-semibold text-ink-800">{clinic.phone}</p>
+                    </div>
+                  </a>
+                  <a
+                    href={`mailto:${clinic.email}`}
+                    className="group flex flex-col gap-2 rounded-2xl bg-ink-50 p-4 ring-1 ring-ink-100 transition-all hover:bg-brand-50 hover:ring-brand-100"
+                  >
+                    <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white text-brand-600 shadow-soft ring-1 ring-ink-100 transition-colors group-hover:bg-brand-gradient group-hover:text-white group-hover:ring-transparent">
+                      <Mail className="h-3.5 w-3.5" />
+                    </span>
+                    <div>
+                      <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-ink-400">Email</p>
+                      <p className="mt-0.5 text-xs font-semibold text-ink-800 break-all">{clinic.email}</p>
+                    </div>
+                  </a>
+                </div>
+
+                {/* address */}
+                <div className="mt-4 flex items-start gap-3 rounded-2xl bg-ink-50 p-4 ring-1 ring-ink-100">
+                  <span className="mt-0.5 flex h-8 w-8 flex-none items-center justify-center rounded-xl bg-white text-brand-600 shadow-soft ring-1 ring-ink-100">
+                    <MapPin className="h-3.5 w-3.5" />
+                  </span>
+                  <div>
+                    <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-ink-400">Address</p>
+                    <p className="mt-0.5 text-xs font-medium leading-relaxed text-ink-700">{clinic.address}</p>
+                  </div>
+                </div>
+
+                {/* hours */}
+                <div className="mt-4 rounded-2xl bg-ink-50 p-4 ring-1 ring-ink-100">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-8 w-8 flex-none items-center justify-center rounded-xl bg-white text-brand-600 shadow-soft ring-1 ring-ink-100">
+                      <Clock className="h-3.5 w-3.5" />
+                    </span>
+                    <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-ink-400">Working Hours</p>
+                  </div>
+                  <div className="mt-3 divide-y divide-ink-100">
+                    {clinic.hours.map((h) => (
+                      <div key={h.day} className="flex items-center justify-between gap-4 py-2.5 text-sm">
+                        <span className="font-medium text-ink-800">{h.day}</span>
+                        <span className="rounded-full bg-white px-3 py-0.5 text-xs font-semibold text-brand-700 ring-1 ring-brand-100">{h.time}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* socials */}
+                <div className="mt-5 flex items-center gap-2">
+                  <span className="mr-1 text-xs font-medium text-ink-400">Follow us</span>
                   {clinic.socials.map((s) => (
                     <a
                       key={s.label}
@@ -218,7 +243,7 @@ export default function Contact() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label={s.label}
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink-600 ring-1 ring-ink-200 transition-all duration-300 hover:bg-brand-gradient hover:text-white hover:ring-transparent"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-ink-50 text-ink-600 ring-1 ring-ink-200 transition-all duration-300 hover:bg-brand-gradient hover:text-white hover:ring-transparent"
                     >
                       <SocialIcon name={s.label} />
                     </a>
@@ -235,7 +260,10 @@ export default function Contact() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="relative overflow-hidden rounded-3xl bg-white p-2 shadow-card ring-1 ring-ink-100"
             >
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-ink-50">
+              <div
+                className="relative overflow-hidden rounded-2xl bg-ink-50"
+                style={{ minHeight: "320px", height: "calc(100% - 60px)" }}
+              >
                 <iframe
                   title={`${clinic.shortName} ${clinic.city} — location map`}
                   src={`https://www.google.com/maps?q=${encodeURIComponent(
@@ -274,7 +302,7 @@ export default function Contact() {
                 </a>
               </div>
             </motion.div>
-            </div>
+
           </div>
         </div>
       </section>
@@ -300,21 +328,5 @@ function FieldError({ text }) {
       <AlertCircle className="h-3 w-3" />
       {text}
     </p>
-  );
-}
-
-function InfoLine({ icon: Icon, label, value }) {
-  return (
-    <li className="flex items-start gap-3">
-      <span className="mt-0.5 flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100">
-        <Icon className="h-4 w-4" />
-      </span>
-      <div className="flex-1">
-        <div className="text-[11px] font-medium uppercase tracking-[0.16em] text-ink-400">
-          {label}
-        </div>
-        <div className="mt-1 text-sm text-ink-700">{value}</div>
-      </div>
-    </li>
   );
 }

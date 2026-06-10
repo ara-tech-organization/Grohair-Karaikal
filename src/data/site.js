@@ -16,8 +16,6 @@ export const clinic = {
   socials: [
     { label: "Instagram", href: "https://instagram.com" },
     { label: "Facebook", href: "https://facebook.com" },
-    { label: "Twitter", href: "https://twitter.com" },
-    { label: "LinkedIn", href: "https://linkedin.com" },
   ],
 };
 

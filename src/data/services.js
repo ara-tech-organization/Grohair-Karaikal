@@ -22,7 +22,7 @@ import GlutathioneImg from "../assets/treatments/glutalite-iv-drip.jpg";
 import GcellImg from "../assets/treatments/gcell.jpg";
 import HybridImg from "../assets/treatments/hybrid-hair-transplant.jpg";
 import RegenPro9Img from "../assets/treatments/regen-pro9-new.png";
-import GelPrpImg from "../assets/treatments/gel-prp.jpg";
+import GelPrpImg from "../assets/treatments/advancedgelprp.png";
 import OltImg from "../assets/treatments/olt-new.png";
 import CosmeticHairImg from "../assets/treatments/cosmetic-hair-system.png";
 import PrpStemx27Img from "../assets/treatments/prp-stemx27.png";
