@@ -4,13 +4,20 @@ import { ArrowUpRight } from "lucide-react";
 
 const MotionLink = motion(Link);
 
-export default function ServiceCard({ service, index = 0, to = "/services" }) {
+export default function ServiceCard({ service, index = 0, to }) {
   const Icon = service.icon;
   const hasImage = Boolean(service.image);
 
+  // Auto-derive detail route from category + slug when no explicit `to` is given
+  const resolvedTo =
+    to ??
+    (service.category && service.slug
+      ? `/services/${service.category}/${service.slug}`
+      : "/services");
+
   return (
     <MotionLink
-      to={to}
+      to={resolvedTo}
       aria-label={`${service.title} — view details`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}

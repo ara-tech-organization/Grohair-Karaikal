@@ -53,15 +53,9 @@ export default function Services() {
       />
 
       {/* TREATMENTS */}
-      <section className="section">
+      <section className="pb-20 pt-8 sm:pb-24 sm:pt-10 lg:pb-28">
         <div className="container-px mx-auto max-w-7xl">
-          {/* <SectionHeader
-            eyebrow="Treatments"
-            title="Our complete treatment menu"
-            description="Every treatment below is offered at our Karaikal clinic by trained specialists. Use the filters to narrow down what's most relevant for you."
-          /> */}
-
-          <div className="mt-10 flex justify-center">
+          <div className="flex justify-center">
             <div
               role="tablist"
               aria-label="Filter treatments"

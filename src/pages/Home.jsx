@@ -25,7 +25,7 @@ import {
   skinTreatments,
 } from "../data/services";
 import { testimonials, stats } from "../data/testimonials";
-import HeroBgImg from "../assets/treatments/hero.webp";
+import HeroBgImg from "../assets/hero.png";
 
 const features = [
   {
@@ -54,13 +54,9 @@ const features = [
   },
 ];
 
-// Featured treatments for the Home page.
-const skinFeatured = skinTreatments.filter((t) =>
-  ["hydra-facial", "q-switch-laser", "skin-peels"].includes(t.slug)
-);
-const hairFeatured = hairTreatments.filter((t) =>
-  ["hair-transplant", "mesotherapy", "stem-x-27"].includes(t.slug)
-);
+// Featured treatments for the Home page (use first 3 from each list as fallback).
+const skinFeatured = skinTreatments.slice(0, 3);
+const hairFeatured = hairTreatments.slice(0, 3);
 
 export default function Home() {
   return (
@@ -404,13 +400,9 @@ export default function Home() {
 /* ----------------------------- ServicesBento ----------------------------- */
 
 function ServicesBento() {
-  // Pre-pick categories so each tile gets a known, distinct treatment.
   const byTitle = (t) => serviceCategories.find((c) => c.title === t);
-  const hair = byTitle("Hair Care");
+  const hair = byTitle("Hair Treatments");
   const skin = byTitle("Skin Treatments");
-  const laser = byTitle("Laser Therapies");
-  const cosmetic = byTitle("Cosmetic Procedures");
-  const aging = byTitle("Anti Aging");
 
   return (
     <div className="grid gap-5 lg:grid-cols-12 lg:auto-rows-[200px]">
@@ -420,7 +412,7 @@ function ServicesBento() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 0.55 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-800 to-brand-900 p-8 text-white shadow-card sm:p-10 lg:col-span-7 lg:row-span-2"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-800 to-brand-900 p-8 text-white shadow-card sm:p-10 lg:col-span-6 lg:row-span-2"
       >
         <div
           aria-hidden="true"
@@ -466,41 +458,21 @@ function ServicesBento() {
         </div>
       </motion.div>
 
-      {/* HAIR CARE — wide */}
+      {/* HAIR TREATMENTS */}
       <BentoTile
         category={hair}
         delay={0.05}
-        className="lg:col-span-5"
+        className="lg:col-span-6"
         to="/services?tab=hair"
       />
 
-      {/* SKIN TREATMENTS — wide */}
+      {/* SKIN TREATMENTS */}
       <BentoTile
         category={skin}
         delay={0.1}
-        className="lg:col-span-5"
+        className="lg:col-span-6"
         accent="ink"
         to="/services?tab=skin"
-      />
-
-      {/* Bottom row: 3 compact tiles */}
-      <BentoTile
-        category={laser}
-        delay={0.15}
-        compact
-        className="lg:col-span-4"
-      />
-      <BentoTile
-        category={cosmetic}
-        delay={0.2}
-        compact
-        className="lg:col-span-4"
-      />
-      <BentoTile
-        category={aging}
-        delay={0.25}
-        compact
-        className="lg:col-span-4"
       />
     </div>
   );

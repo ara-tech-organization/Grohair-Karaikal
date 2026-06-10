@@ -155,124 +155,125 @@ export default function Contact() {
 
             {/* INFO */}
             <div className="space-y-6 lg:col-span-5">
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.05 }}
-                className="card"
-              >
-                <h3 className="text-base font-semibold text-ink-900">
-                  Clinic Information
-                </h3>
-                <ul className="mt-5 space-y-5 text-sm text-ink-600">
-                  <InfoLine icon={MapPin} label="Address" value={clinic.address} />
-                  <InfoLine
-                    icon={Phone}
-                    label="Phone"
-                    value={
-                      <a
-                        href={`tel:${clinic.phone.replace(/\s/g, "")}`}
-                        className="hover:text-brand-600"
-                      >
-                        {clinic.phone}
-                      </a>
-                    }
-                  />
-                  <InfoLine
-                    icon={Mail}
-                    label="Email"
-                    value={
-                      <a
-                        href={`mailto:${clinic.email}`}
-                        className="hover:text-brand-600"
-                      >
-                        {clinic.email}
-                      </a>
-                    }
-                  />
-                  <InfoLine
-                    icon={Clock}
-                    label="Working hours"
-                    value={
-                      <div className="space-y-0.5">
-                        {clinic.hours.map((h) => (
-                          <div key={h.day} className="flex justify-between gap-6">
-                            <span>{h.day}</span>
-                            <span className="text-ink-500">{h.time}</span>
-                          </div>
-                        ))}
-                      </div>
-                    }
-                  />
-                </ul>
-
-                <div className="mt-7 border-t border-ink-100 pt-5">
-                  <div className="label-base">Follow us</div>
-                  <div className="mt-3 flex items-center gap-2">
-                    {clinic.socials.map((s) => (
-                      <a
-                        key={s.label}
-                        href={s.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={s.label}
-                        className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink-600 ring-1 ring-ink-200 transition-all duration-300 hover:bg-brand-gradient hover:text-white hover:ring-transparent"
-                      >
-                        <SocialIcon name={s.label} />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* MAP — live Google Maps embed */}
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="relative overflow-hidden rounded-3xl bg-white p-2 shadow-card ring-1 ring-ink-100"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-ink-50">
-                  <iframe
-                    title={`${clinic.shortName} ${clinic.city} — location map`}
-                    src={`https://www.google.com/maps?q=${encodeURIComponent(
-                      `${clinic.shortName} ${clinic.city}, ${clinic.address}`
-                    )}&output=embed`}
-                    width="100%"
-                    height="100%"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    allowFullScreen
-                    className="absolute inset-0 h-full w-full border-0"
-                  />
-                </div>
-
-                <div className="flex flex-col items-start justify-between gap-3 px-3 pb-2 pt-3 sm:flex-row sm:items-center">
-                  <div className="flex items-start gap-2.5 text-xs text-ink-600">
-                    <span className="mt-0.5 flex h-7 w-7 flex-none items-center justify-center rounded-full bg-brand-gradient text-white shadow-glow">
-                      <MapPin className="h-3.5 w-3.5" />
-                    </span>
-                    <div className="leading-snug">
-                      <div className="font-semibold text-ink-900">
-                        {clinic.shortName} — {clinic.city}
-                      </div>
-                      <div className="text-ink-500">{clinic.address}</div>
+            {/* CLINIC INFO */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+              className="card"
+            >
+              <h3 className="text-base font-semibold text-ink-900">
+                Clinic Information
+              </h3>
+              <ul className="mt-5 space-y-5 text-sm text-ink-600">
+                <InfoLine icon={MapPin} label="Address" value={clinic.address} />
+                <InfoLine
+                  icon={Phone}
+                  label="Phone"
+                  value={
+                    <a
+                      href={`tel:${clinic.phone.replace(/\s/g, "")}`}
+                      className="hover:text-brand-600"
+                    >
+                      {clinic.phone}
+                    </a>
+                  }
+                />
+                <InfoLine
+                  icon={Mail}
+                  label="Email"
+                  value={
+                    <a
+                      href={`mailto:${clinic.email}`}
+                      className="hover:text-brand-600"
+                    >
+                      {clinic.email}
+                    </a>
+                  }
+                />
+                <InfoLine
+                  icon={Clock}
+                  label="Working hours"
+                  value={
+                    <div className="space-y-0.5">
+                      {clinic.hours.map((h) => (
+                        <div key={h.day} className="flex justify-between gap-6">
+                          <span>{h.day}</span>
+                          <span className="text-ink-500">{h.time}</span>
+                        </div>
+                      ))}
                     </div>
-                  </div>
-                  <a
-                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                      `${clinic.shortName} ${clinic.city}, ${clinic.address}`
-                    )}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex flex-none items-center gap-1 rounded-full bg-ink-50 px-3 py-1.5 text-xs font-semibold text-brand-700 ring-1 ring-ink-100 transition-colors hover:bg-brand-50 hover:ring-brand-100"
-                  >
-                    Get directions
-                  </a>
+                  }
+                />
+              </ul>
+
+              <div className="mt-7 border-t border-ink-100 pt-5">
+                <div className="label-base">Follow us</div>
+                <div className="mt-3 flex items-center gap-2">
+                  {clinic.socials.map((s) => (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={s.label}
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink-600 ring-1 ring-ink-200 transition-all duration-300 hover:bg-brand-gradient hover:text-white hover:ring-transparent"
+                    >
+                      <SocialIcon name={s.label} />
+                    </a>
+                  ))}
                 </div>
-              </motion.div>
+              </div>
+            </motion.div>
+
+            {/* MAP */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="relative overflow-hidden rounded-3xl bg-white p-2 shadow-card ring-1 ring-ink-100"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-ink-50">
+                <iframe
+                  title={`${clinic.shortName} ${clinic.city} — location map`}
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(
+                    `${clinic.shortName} ${clinic.city}, ${clinic.address}`
+                  )}&output=embed`}
+                  width="100%"
+                  height="100%"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full border-0"
+                />
+              </div>
+
+              <div className="flex flex-col items-start justify-between gap-3 px-3 pb-2 pt-3 sm:flex-row sm:items-center">
+                <div className="flex items-start gap-2.5 text-xs text-ink-600">
+                  <span className="mt-0.5 flex h-7 w-7 flex-none items-center justify-center rounded-full bg-brand-gradient text-white shadow-glow">
+                    <MapPin className="h-3.5 w-3.5" />
+                  </span>
+                  <div className="leading-snug">
+                    <div className="font-semibold text-ink-900">
+                      {clinic.shortName} — {clinic.city}
+                    </div>
+                    <div className="text-ink-500">{clinic.address}</div>
+                  </div>
+                </div>
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                    `${clinic.shortName} ${clinic.city}, ${clinic.address}`
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex flex-none items-center gap-1 rounded-full bg-ink-50 px-3 py-1.5 text-xs font-semibold text-brand-700 ring-1 ring-ink-100 transition-colors hover:bg-brand-50 hover:ring-brand-100"
+                >
+                  Get directions
+                </a>
+              </div>
+            </motion.div>
             </div>
           </div>
         </div>
