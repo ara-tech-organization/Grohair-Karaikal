@@ -12,7 +12,7 @@ import Privacy from "./pages/Privacy";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Grohair-Karaikal">
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
