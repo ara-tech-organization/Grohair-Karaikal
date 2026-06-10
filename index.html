@@ -15,6 +15,18 @@
       rel="stylesheet"
     />
     <title>Advanced GroHair &amp; GloSkin Karaikal — Hair &amp; Skin Wellness</title>
+    <!-- GitHub Pages SPA redirect restore -->
+    <script>
+      (function () {
+        var redirect = sessionStorage.getItem("spa-redirect");
+        if (redirect) {
+          sessionStorage.removeItem("spa-redirect");
+          var base = "/Grohair-Karaikal";
+          var path = redirect.slice(base.length) || "/";
+          window.history.replaceState(null, null, base + path);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
