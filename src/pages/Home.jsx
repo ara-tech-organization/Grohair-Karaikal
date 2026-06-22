@@ -405,7 +405,7 @@ function ServicesBento() {
   const skin = byTitle("Skin Treatments");
 
   return (
-    <div className="grid gap-5 lg:grid-cols-12 lg:auto-rows-[200px]">
+    <div className="grid gap-5 lg:grid-cols-12 lg:auto-rows-[260px]">
       {/* FEATURE — heading + CTA */}
       <motion.div
         initial={{ opacity: 0, y: 18 }}

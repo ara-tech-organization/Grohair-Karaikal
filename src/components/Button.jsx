@@ -34,7 +34,7 @@ export default function Button({
   }
 
   return (
-    <button type={type} className={cls} {...props}>
+    <button type={type} className={`${cls} disabled:opacity-50 disabled:cursor-not-allowed`} {...props}>
       {children}
     </button>
   );

@@ -13,12 +13,10 @@ import {
   Heart,
   Smile,
   Eraser,
-  TestTube2,
   Waves,
 } from "lucide-react";
 
 // Hair treatment images
-import GlutathioneImg from "../assets/treatments/glutalite-iv-drip.jpg";
 import GcellImg from "../assets/treatments/gcell.jpg";
 import HybridImg from "../assets/treatments/hybrid-hair-transplant.jpg";
 import RegenPro9Img from "../assets/treatments/regen-pro9-new.png";
@@ -40,15 +38,6 @@ import MnrfImg from "../assets/treatments/mnrf.jpg";
 import TattooRemovalImg from "../assets/treatments/tattoo-removal.jpg";
 
 export const hairTreatments = [
-  {
-    slug: "glutathione-iv-drip",
-    title: "Glutathione IV Drip Therapy",
-    icon: TestTube2,
-    image: GlutathioneImg,
-    category: "hair",
-    summary:
-      "Advanced wellness IV treatment delivering the body's Master Antioxidant directly into the bloodstream — supports detoxification, improves skin radiance, combats oxidative stress, and enhances overall wellness.",
-  },
   {
     slug: "g-cell-therapy",
     title: "G Cell Therapy",
