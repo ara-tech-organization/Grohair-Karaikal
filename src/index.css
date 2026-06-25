@@ -143,3 +143,13 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.date-input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+}
+
+.date-input::-webkit-inner-spin-button,
+.date-input::-webkit-clear-button {
+  display: none;
+}

@@ -2,9 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  CalendarDays,
-  Clock,
-  ChevronDown,
   AlertCircle,
   ArrowRight,
   ShieldCheck,
@@ -15,6 +12,8 @@ import {
 
 import PageHero from "../components/PageHero";
 import Button from "../components/Button";
+import CustomSelect from "../components/CustomSelect";
+import DateInput from "../components/DateInput";
 import { hairTreatments, skinTreatments } from "../data/services";
 import { clinic } from "../data/site";
 
@@ -58,6 +57,11 @@ export default function Appointment() {
     if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
   };
 
+  const updateValue = (key) => (value) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
+  };
+
   const validate = () => {
     const next = {};
     if (!form.name.trim()) next.name = "Please enter your name.";
@@ -75,7 +79,7 @@ export default function Appointment() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
-    navigate("/thank-you", { state: { type: "appointment", form } });
+    navigate("/skinhair/thankyou", { state: { type: "appointment", form } });
   };
 
   return (
@@ -156,7 +160,7 @@ export default function Appointment() {
                   label="Treatment"
                   id="ap-treatment"
                   value={form.treatment}
-                  onChange={update("treatment")}
+                  onChange={updateValue("treatment")}
                   error={errors.treatment}
                   placeholder="Choose a treatment"
                   groups={TREATMENT_GROUPS}
@@ -166,48 +170,26 @@ export default function Appointment() {
                   <label htmlFor="ap-date" className="label-base mb-2 block">
                     Preferred date
                   </label>
-                  <div className="relative">
-                    <input
-                      id="ap-date"
-                      type="date"
-                      min={todayISO()}
-                      value={form.date}
-                      onChange={update("date")}
-                      className="input-base pr-10"
-                    />
-                    <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
-                  </div>
+                  <DateInput
+                    id="ap-date"
+                    min={todayISO()}
+                    value={form.date}
+                    onChange={update("date")}
+                  />
                   {errors.date && <FieldError text={errors.date} />}
                 </div>
 
-                <div className="sm:col-span-2">
-                  <label className="label-base mb-3 block">
+                <div>
+                  <label htmlFor="ap-time" className="label-base mb-2 block">
                     Time slot
                   </label>
-                  <div className="flex flex-wrap gap-2">
-                    {TIME_SLOTS.map((slot) => {
-                      const active = form.time === slot;
-                      return (
-                        <button
-                          key={slot}
-                          type="button"
-                          onClick={() => {
-                            setForm((p) => ({ ...p, time: slot }));
-                            if (errors.time)
-                              setErrors((p) => ({ ...p, time: undefined }));
-                          }}
-                          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ring-1 transition-all duration-200 ${
-                            active
-                              ? "bg-brand-gradient text-white ring-transparent shadow-glow"
-                              : "bg-white text-ink-700 ring-ink-200 hover:ring-brand-200 hover:text-brand-700"
-                          }`}
-                        >
-                          <Clock className="h-3.5 w-3.5" />
-                          {slot}
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <CustomSelect
+                    buttonId="ap-time"
+                    value={form.time}
+                    onChange={updateValue("time")}
+                    placeholder="Pick a time slot"
+                    options={TIME_SLOTS}
+                  />
                   {errors.time && <FieldError text={errors.time} />}
                 </div>
 
@@ -325,36 +307,14 @@ function SelectField({
       <label htmlFor={id} className="label-base mb-2 block">
         {label}
       </label>
-      <div className="relative">
-        <select
-          id={id}
-          disabled={disabled}
-          {...props}
-          className={`input-base appearance-none pr-10 ${
-            disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer"
-          }`}
-        >
-          <option value="" disabled>
-            {placeholder}
-          </option>
-          {groups
-            ? groups.map((g) => (
-                <optgroup key={g.label} label={g.label}>
-                  {g.options.map((o) => (
-                    <option key={o} value={o}>
-                      {o}
-                    </option>
-                  ))}
-                </optgroup>
-              ))
-            : options?.map((o) => (
-                <option key={o} value={o}>
-                  {o}
-                </option>
-              ))}
-        </select>
-        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
-      </div>
+      <CustomSelect
+        buttonId={id}
+        disabled={disabled}
+        options={options}
+        groups={groups}
+        placeholder={placeholder}
+        {...props}
+      />
       {error && <FieldError text={error} />}
     </div>
   );

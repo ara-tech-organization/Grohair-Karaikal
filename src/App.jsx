@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
@@ -21,7 +21,8 @@ export default function App() {
           <Route path="/services/:category/:slug" element={<TreatmentDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/appointment" element={<Appointment />} />
-          <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/skinhair/thankyou" element={<ThankYou />} />
+          <Route path="/thank-you" element={<Navigate to="/skinhair/thankyou" replace />} />
           <Route path="/privacy" element={<Privacy />} />
         </Route>
       </Routes>

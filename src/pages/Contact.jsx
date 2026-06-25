@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -8,12 +8,12 @@ import {
   Clock,
   Send,
   AlertCircle,
-  ChevronDown,
-  Check,
 } from "lucide-react";
 
 import PageHero from "../components/PageHero";
 import Button from "../components/Button";
+import CustomSelect from "../components/CustomSelect";
+import DateInput from "../components/DateInput";
 import SocialIcon from "../components/SocialIcon";
 import { clinic } from "../data/site";
 import { hairTreatments, skinTreatments } from "../data/services";
@@ -25,6 +25,8 @@ const TREATMENT_GROUPS = [
   { label: "Skin Treatments", items: skinTreatments.map((t) => t.title) },
 ];
 
+const todayISO = () => new Date().toISOString().split("T")[0];
+
 export default function Contact() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -32,6 +34,7 @@ export default function Contact() {
     email: "",
     phone: "",
     treatment: "",
+    date: "",
     message: "",
   });
   const [errors, setErrors] = useState({});
@@ -75,6 +78,7 @@ export default function Contact() {
           phone: form.phone,
           message: form.message,
           treatment: form.treatment,
+          preferredDate: form.date,
           date: new Date().toLocaleDateString("en-IN", { year: "numeric", month: "2-digit", day: "2-digit" }),
           time: new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true }),
           source: "Website",
@@ -82,7 +86,7 @@ export default function Contact() {
       });
       const data = await res.json();
       if (data.success) {
-        navigate("/thank-you", { state: { type: "contact" } });
+        navigate("/skinhair/thankyou", { state: { type: "contact" } });
       } else {
         setSubmitError("Something went wrong. Please try again or call us directly.");
       }
@@ -170,18 +174,35 @@ export default function Contact() {
               />
 
               {/* TREATMENT DROPDOWN */}
-              <div className="sm:col-span-1">
-                <label className="label-base mb-2 block">
-                  Treatment <span className="text-ink-400 font-normal normal-case tracking-normal">(optional)</span>
-                </label>
-                <TreatmentDropdown
-                  value={form.treatment}
-                  onChange={setTreatment}
-                />
+              <div className="space-y-5 sm:col-span-1 sm:flex sm:h-full sm:flex-col sm:justify-between">
+                <div>
+                  <label className="label-base mb-2 block">
+                    Treatment <span className="text-ink-400 font-normal normal-case tracking-normal">(optional)</span>
+                  </label>
+                  <CustomSelect
+                    value={form.treatment}
+                    onChange={setTreatment}
+                    placeholder="Select a treatment..."
+                    groups={TREATMENT_GROUPS}
+                    clearLabel="No preference"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="contact-date" className="label-base mb-2 block">
+                    Preferred date <span className="text-ink-400 font-normal normal-case tracking-normal">(optional)</span>
+                  </label>
+                  <DateInput
+                    id="contact-date"
+                    min={todayISO()}
+                    value={form.date}
+                    onChange={update("date")}
+                  />
+                </div>
               </div>
 
               {/* MESSAGE */}
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-2 flex h-full flex-col">
                 <label
                   htmlFor="contact-message"
                   className="label-base mb-2 block"
@@ -190,11 +211,11 @@ export default function Contact() {
                 </label>
                 <textarea
                   id="contact-message"
-                  rows={5}
+                  rows={1}
                   placeholder="Tell us about your goals or the treatment you're curious about…"
                   value={form.message}
                   onChange={update("message")}
-                  className="input-base resize-none"
+                  className="input-base min-h-0 flex-1 resize-none"
                 />
                 {errors.message && <FieldError text={errors.message} />}
               </div>
