@@ -10,6 +10,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
+const API_URL = "https://adgrohairgloskinkaraikal.com/api/email.php";
+
 import PageHero from "../components/PageHero";
 import Button from "../components/Button";
 import CustomSelect from "../components/CustomSelect";
@@ -50,6 +52,8 @@ export default function Appointment() {
     notes: "",
   });
   const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const update = (key) => (e) => {
     const value = e.target.value;
@@ -76,10 +80,39 @@ export default function Appointment() {
     return Object.keys(next).length === 0;
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    navigate("/skinhair/thankyou", { state: { type: "appointment", form } });
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          message: form.notes,
+          treatment: form.treatment,
+          preferredDate: form.date,
+          preferredTime: form.time,
+          date: new Date().toLocaleDateString("en-IN", { year: "numeric", month: "2-digit", day: "2-digit" }),
+          time: new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true }),
+          source: "Website",
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        navigate("/skinhair/thankyou", { state: { type: "appointment" } });
+      } else {
+        setSubmitError("Something went wrong. Please try again or call us directly.");
+      }
+    } catch {
+      setSubmitError("Unable to send. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -207,14 +240,22 @@ export default function Appointment() {
                   />
                 </div>
 
-                <div className="sm:col-span-2 flex flex-col-reverse items-stretch justify-between gap-4 pt-2 sm:flex-row sm:items-center">
-                  <p className="text-xs text-ink-400">
-                    By booking, you agree to our cancellation and privacy policies.
-                  </p>
-                  <Button type="submit" variant="primary">
-                    Confirm Appointment
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
+                <div className="sm:col-span-2 space-y-3 pt-2">
+                  {submitError && (
+                    <p className="inline-flex items-center gap-1.5 text-xs text-brand-700">
+                      <AlertCircle className="h-3.5 w-3.5 flex-none" />
+                      {submitError}
+                    </p>
+                  )}
+                  <div className="flex flex-col-reverse items-stretch justify-between gap-4 sm:flex-row sm:items-center">
+                    <p className="text-xs text-ink-400">
+                      By booking, you agree to our cancellation and privacy policies.
+                    </p>
+                    <Button type="submit" variant="primary" disabled={submitting}>
+                      {submitting ? "Sending…" : "Confirm Appointment"}
+                      {!submitting && <ArrowRight className="h-4 w-4" />}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </motion.form>
